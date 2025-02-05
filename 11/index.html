@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YEEZUS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono&display=swap" rel="stylesheet"> <!-- Подключение шрифта -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: white;
+      font-family: 'Sometype Mono', monospace; /* Изменение шрифта */
+      overflow: hidden;
+      position: relative;
+    }
+    /* Основной текст */
+    #yeezus {
+      font-size: 120px;
+      color: black;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      text-shadow: none; /* Убираем свечение */
+    }
+    #yeezus:hover {
+      font-size: 100px;
+      color: gray;
+    }
+    #yeezus::before,
+    #yeezus::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 6px solid black;
+      display: none;
+    }
+    #yeezus:hover::before {
+      bottom: -40px;
+      left: -40px;
+      border-right: none;
+      border-top: none;
+      display: block;
+    }
+    #yeezus:hover::after {
+      top: -40px;
+      right: -40px;
+      border-left: none;
+      border-bottom: none;
+      display: block;
+    }
+
+    /* TIME TO CHANGE */
+    #time-to-change {
+      display: none;
+      font-size: 80px;
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .question-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .question-mark {
+      font-size: 60px;
+      cursor: pointer;
+      margin: 0 30px;
+      transition: all 0.5s ease;
+    }
+    .question-mark:hover {
+      color: gray; /* Цвет при наведении только для знаков вопроса */
+    }
+    .question-mark.revealed {
+      color: black; /* Цвет после замены знака вопроса */
+      pointer-events: none; /* Отключаем взаимодействие с мышью */
+    }
+
+    /* THE COUNTDOWN HAS BEGUN */
+    #countdown-title {
+      display: none;
+      font-size: 80px;
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Таймер */
+    #countdown {
+      display: none;
+      font-size: 60px;
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      text-transform: uppercase; /* Таймер в капсе */
+    }
+
+    /* Белый шум */
+    #noise {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('white_noise.gif') no-repeat center center fixed;
+      background-size: cover;
+      z-index: 1000;
+    }
+
+    /* Анимации */
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+    .fade-out {
+      animation: fadeOut 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="yeezus">YEEZUS</div>
+  <div id="time-to-change">
+    TIME TO CHANGE
+    <div class="question-container">
+      <span class="question-mark">?</span>
+      <span class="question-mark">?</span>
+    </div>
+  </div>
+  <div id="countdown-title">THE COUNTDOWN HAS BEGUN</div>
+  <div id="countdown"></div>
+  <div id="noise"></div>
+  <script>
+    const yeezus = document.getElementById('yeezus');
+    const timeToChange = document.getElementById('time-to-change');
+    const questionMarks = document.querySelectorAll('.question-mark');
+    const countdownTitle = document.getElementById('countdown-title');
+    const countdown = document.getElementById('countdown');
+    const noise = document.getElementById('noise');
+    let questionMarkClicked = [false, false];
+
+    // Клик по "YEEZUS"
+    yeezus.addEventListener('click', () => {
+      yeezus.style.fontSize = '100px';
+      yeezus.style.color = 'gray';
+      setTimeout(() => {
+        yeezus.style.display = 'none';
+        timeToChange.style.display = 'block';
+        timeToChange.style.opacity = 1; // Плавное появление
+      }, 300); // Задержка перед исчезновением
+    });
+
+    // Клик по знакам вопроса
+    questionMarks.forEach((mark, index) => {
+      mark.addEventListener('click', () => {
+        if (!questionMarkClicked[index]) {
+          mark.textContent = index === 0 ? 'YOUR TOKENS' : 'YOUR DESTINY';
+          mark.style.fontSize = '50px';
+          mark.classList.add('revealed'); // Добавляем класс revealed
+          questionMarkClicked[index] = true;
+
+          if (questionMarkClicked.every(clicked => clicked)) {
+            setTimeout(() => {
+              timeToChange.classList.add('fade-out');
+              setTimeout(() => {
+                timeToChange.style.display = 'none';
+
+                // Показываем текст "THE COUNTDOWN HAS BEGUN" на 0.7 секунды
+                countdownTitle.style.display = 'block';
+                countdownTitle.style.opacity = 1; // Плавное появление
+                setTimeout(() => {
+                  countdownTitle.style.opacity = 0; // Исчезновение через 0.7 секунды
+                  setTimeout(() => {
+                    countdownTitle.style.display = 'none'; // Скрываем текст
+                    countdown.style.display = 'block';
+                    countdown.style.opacity = 1; // Показываем таймер
+                    startTimer();
+                  }, 300); // Задержка перед появлением таймера
+                }, 700); // Время показа текста "THE COUNTDOWN HAS BEGUN"
+              }, 1000); // Увеличенная задержка
+            }, 2000); // Увеличенная задержка
+          }
+        }
+      });
+    });
+
+    // Таймер
+    function startTimer() {
+      const endDate = new Date('February 5, 2025 00:00:00 EST').getTime();
+      const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const diff = endDate - now;
+        if (diff <= 0) {
+          clearInterval(interval);
+          countdown.textContent = 'EXPIRED';
+          return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        const milliseconds = Math.floor((diff % 1000) / 10);
+        countdown.textContent = `${days}D ${hours}H ${minutes}M ${seconds}S ${milliseconds}MS`; // Таймер в капсе
+      }, 10);
+
+      // Просто скрываем таймер без анимации
+      setTimeout(() => {
+        countdown.style.display = 'none';
+        noise.style.display = 'block';
+      }, 3000); // Задержка перед скрытием таймера
+    }
+  </script>
+</body>
+</html>
