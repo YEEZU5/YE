@@ -83,6 +83,8 @@
       cursor: pointer;
       margin: 0 5%;
       transition: all 0.5s ease;
+      text-align: center;
+      line-height: 1.2;
     }
 
     .question-mark:hover {
@@ -233,7 +235,8 @@
     questionMarks.forEach((mark, index) => {
       mark.addEventListener('click', () => {
         if (!questionMarkClicked[index]) {
-          mark.textContent = index === 0 ? 'YOUR TOKENS' : 'YOUR DESTINY';
+          // Добавляем <br> для переноса строки
+          mark.innerHTML = index === 0 ? 'Your<br>Tokens' : 'Your<br>Destiny';
           mark.style.fontSize = 'calc(4vw + 10px)';
           mark.classList.add('revealed'); // Добавляем класс revealed
           questionMarkClicked[index] = true;
