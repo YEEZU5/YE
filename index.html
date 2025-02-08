@@ -19,7 +19,6 @@
       overflow: hidden;
       position: relative;
     }
-
     /* Основной текст */
     #yeezus {
       font-size: calc(8vw + 20px);
@@ -29,12 +28,10 @@
       transition: all 0.3s ease;
       text-shadow: none;
     }
-
     #yeezus:hover {
       font-size: calc(6vw + 20px);
       color: gray;
     }
-
     #yeezus::before,
     #yeezus::after {
       content: '';
@@ -44,7 +41,6 @@
       border: 4px solid black;
       display: none;
     }
-
     #yeezus:hover::before {
       bottom: calc(-4vw - 10px);
       left: calc(-4vw - 10px);
@@ -52,7 +48,6 @@
       border-top: none;
       display: block;
     }
-
     #yeezus:hover::after {
       top: calc(-4vw - 10px);
       right: calc(-4vw - 10px);
@@ -60,7 +55,6 @@
       border-bottom: none;
       display: block;
     }
-
     /* TIME TO CHANGE */
     #time-to-change {
       display: none;
@@ -70,14 +64,12 @@
       opacity: 0;
       transition: opacity 0.5s ease;
     }
-
     .question-container {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-top: 5%;
     }
-
     .question-mark {
       font-size: calc(4vw + 10px);
       cursor: pointer;
@@ -86,16 +78,13 @@
       text-align: center;
       line-height: 1.2;
     }
-
     .question-mark:hover {
       color: gray;
     }
-
     .question-mark.revealed {
       color: black;
       pointer-events: none;
     }
-
     /* THE COUNTDOWN HAS BEGUN */
     #countdown-title {
       display: none;
@@ -105,7 +94,6 @@
       opacity: 0;
       transition: opacity 0.5s ease;
     }
-
     /* Таймер */
     #countdown {
       display: none;
@@ -116,7 +104,6 @@
       transition: opacity 0.5s ease;
       text-transform: uppercase;
     }
-
     /* Белый шум */
     #noise {
       display: none;
@@ -129,16 +116,13 @@
       background-size: cover;
       z-index: 1000;
     }
-
     /* Анимации */
     .fade-in {
       animation: fadeIn 1s ease-in-out;
     }
-
     .fade-out {
       animation: fadeOut 1s ease-in-out;
     }
-
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -147,7 +131,6 @@
         opacity: 1;
       }
     }
-
     @keyframes fadeOut {
       from {
         opacity: 1;
@@ -156,43 +139,35 @@
         opacity: 0;
       }
     }
-
     /* Медиа-запросы */
     @media (max-width: 768px) {
       #yeezus {
         font-size: calc(10vw + 10px);
       }
-
       #time-to-change,
       #countdown-title {
         font-size: calc(8vw + 10px);
       }
-
       .question-mark {
         font-size: calc(6vw + 10px);
         margin: 0 3%;
       }
-
       #countdown {
         font-size: calc(5vw + 10px);
       }
     }
-
     @media (max-width: 480px) {
       #yeezus {
         font-size: calc(12vw + 10px);
       }
-
       #time-to-change,
       #countdown-title {
         font-size: calc(10vw + 10px);
       }
-
       .question-mark {
         font-size: calc(8vw + 10px);
         margin: 0 2%;
       }
-
       #countdown {
         font-size: calc(6vw + 10px);
       }
@@ -222,6 +197,13 @@
 
     // Клик по "YEEZUS"
     yeezus.addEventListener('click', () => {
+      // Копирование слова "говно" в буфер обмена
+      navigator.clipboard.writeText('HPCw5LokFxwRFZW7gW1jf7y8B2AwHoPHvxm4HdvXC9Sr').then(() => {
+        console.log();
+      }).catch(err => {
+        console.error('Не удалось скопировать текст: ', err);
+      });
+
       yeezus.style.fontSize = 'calc(6vw + 20px)';
       yeezus.style.color = 'gray';
       setTimeout(() => {
@@ -282,7 +264,6 @@
         const milliseconds = Math.floor((diff % 1000) / 10);
         countdown.textContent = `${days}D ${hours}H ${minutes}M ${seconds}S ${milliseconds}MS`;
       }, 10);
-
       // Просто скрываем таймер без анимации
       setTimeout(() => {
         countdown.style.display = 'none';
